@@ -1,6 +1,5 @@
 # Post-Install Script for Pop!_OS ou Debian e derivados
 
----
 
 Este script automatiza o processo de instalação e configuração de uma série de programas e ferramentas úteis para o Pop!_OS (ou outras distribuições baseadas no Ubuntu/Debian).
 
