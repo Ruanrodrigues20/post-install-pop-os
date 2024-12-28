@@ -9,6 +9,8 @@ Ele realiza as seguintes operações:
 - Instala ferramentas adicionais como **Oh My Bash**, **IntelliJ**, **Maven**, entre outros.
 - Configura o ambiente com variáveis de ambiente, como `JAVA_HOME` e `MAVEN_HOME`.
 
+---
+
 ## Funcionalidades
 
 O script realiza as seguintes operações:
@@ -40,11 +42,15 @@ O script realiza as seguintes operações:
 9. **Limpeza e remoção de arquivos temporários:**
    - Remove pacotes `.deb` baixados, limpa o cache de pacotes e remove pacotes desnecessários.
 
+---
+
 ## Pré-requisitos
 
 - **Pop!_OS** ou outra distribuição baseada em **Ubuntu/Debian**.
 - **Permissões de superusuário** (sudo) para instalar pacotes e realizar mudanças no sistema.
 - **Conexão com a internet** para baixar pacotes e scripts de instalação.
+
+---
 
 ## Como usar
 
@@ -77,6 +83,7 @@ O script realiza as seguintes operações:
 4. **Reinicie o terminal ou o sistema**
     Para garantir que todas as variáveis de ambiente sejam corretamente carregadas, reinicie o terminal ou o sistema.
 
+---
 
 ## Estrutura do Script
 
@@ -93,10 +100,19 @@ O script é dividido em várias funções que podem ser chamadas separadamente, 
 - **Função `setarJavaHome`**: Configura a variável de ambiente `JAVA_HOME`.
 - **Função `removerLixo`**: Limpa arquivos temporários, pacotes e diretórios desnecessários.
 
+---
+
 ## Observações
 
 - O script deve ser executado com êxito em outras distribuições baseadas em Debian/Ubuntu, mas foi testado principalmente no **Pop!_OS**.
 
+---
+
+## 🧑‍💻 Contribuição
+
+Sinta-se à vontade para abrir issues ou pull requests para melhorias no script.
+
+---
 
 ## Licença
 
