@@ -95,9 +95,7 @@ O script é dividido em várias funções que podem ser chamadas separadamente, 
 
 ## Observações
 
-- O script pode ser adaptado para outras distribuições baseadas em Debian/Ubuntu, mas foi testado principalmente no **Pop!_OS**.
-- Tenha cuidado ao rodar scripts como `sudo`, especialmente quando estão fazendo alterações significativas no sistema.
-
+- O script deve ser executado com êxito em outras distribuições baseadas em Debian/Ubuntu, mas foi testado principalmente no **Pop!_OS**.
 
 
 ## Licença
