@@ -15,38 +15,42 @@ addRepositories(){
     apt update 
 }
 
+addFlatpakRep(){
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y
+}
+
 
 #instalar programas
 install(){
 
     # Lista de pacotes a serem instalados
-pacotes=(
-  curl
-  wget
-  dpkg
-  git
-  neofetch
-  discord
-  vlc
-  cpufetch
-  bpytop
-  hollywood
-  vim
-  libreoffice
-  gimp
-  flatpak
-)
+    pacotes=(
+        curl
+        wget
+        dpkg
+        git
+        neofetch
+        discord
+        vlc
+        cpufetch
+        hollywood
+        vim
+        libreoffice
+        gimp
+        flatpak
+        gnome-software-plugin-flatpak
+    )
 
-# Instalando cada pacote com um laço
-for pacote in "${pacotes[@]}"; do
-    echo "Instalando: $pacote..."
-     apt install -y "$pacote"
-    if [ $? -eq 0 ]; then
-        echo "Pacote $pacote instalado com sucesso!"
-    else
-        echo "Falha ao instalar $pacote." >&2
-    fi
-done
+    # Instalando cada pacote com um laço
+    for pacote in "${pacotes[@]}"; do
+        echo "Instalando: $pacote..."
+        apt install -y "$pacote"
+        if [ $? -eq 0 ]; then
+            echo "Pacote $pacote instalado com sucesso!"
+        else
+            echo "Falha ao instalar $pacote." >&2
+        fi
+    zqzqdone
 }
 
 
@@ -119,7 +123,7 @@ setarJavaHome(){
 }
 
 removerLixo(){
-    sudo rm *.deb
+    rm *.deb
     rm -rf intelliJ-install/
     apt clean
     apt autoremove -y
@@ -129,9 +133,9 @@ removerLixo(){
 
 main(){
     up
-    clear
+    addRepositories
     install
-    clear
+    addFlatpakRep   
     downloadDeb
     installDebs
     clear
