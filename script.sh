@@ -51,6 +51,23 @@ done
 
 
 
+
+installFlatpaks(){
+
+#Warehouse
+flatpak install flathub io.github.flattool.Warehouse
+
+
+#Dev Toolbox
+flatpak install flathub me.iepure.devtoolbox
+
+}
+
+
+
+
+
+
 #Baixar programas deb
 downloadDeb(){
     #Java 21
