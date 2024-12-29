@@ -3,29 +3,51 @@
 
 #Atulizar
 up(){
-   sudo apt update 
-   sudo apt upgrade -y
-   sudo dpkg --configure -a
+    apt update 
+    apt upgrade -y
+    dpkg --configure -a
+}
+
+
+
+addRepositories(){
+    add-apt-repository ppa:flatpak/stable -y
+    apt update 
 }
 
 
 #instalar programas
 install(){
-    sudo apt install curl -y
-    sudo apt install wget -y
-    sudo apt install dpkg -y
-    sudo apt install git -y
-    sudo apt install neofetch -y
-    sudo apt install discord -y
-    sudo apt install vlc -y
-    sudo apt install cpufetch -y
-    sudo apt install bpytop -y
-    sudo apt install hollywood -y
-    sudo apt install vim -y
-    sudo apt install libreoffice -y
-    sudo apt install gimp -y
-}
 
+    # Lista de pacotes a serem instalados
+pacotes=(
+  curl
+  wget
+  dpkg
+  git
+  neofetch
+  discord
+  vlc
+  cpufetch
+  bpytop
+  hollywood
+  vim
+  libreoffice
+  gimp
+  flatpak
+)
+
+# Instalando cada pacote com um laço
+for pacote in "${pacotes[@]}"; do
+    echo "Instalando: $pacote..."
+     apt install -y "$pacote"
+    if [ $? -eq 0 ]; then
+        echo "Pacote $pacote instalado com sucesso!"
+    else
+        echo "Falha ao instalar $pacote." >&2
+    fi
+done
+}
 
 
 
@@ -41,8 +63,8 @@ downloadDeb(){
     
 #instalar debs
 installDebs(){
-    sudo dpkg -i *.deb
-    sudo rm *.deb
+    dpkg -i *.deb
+    rm *.deb
 }
 
 
@@ -58,16 +80,16 @@ installIntellij(){
 
 #instalar fastfetch
 installfastfetch(){
-    sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
-    sudo apt update
-    sudo apt install fastfetch -y
+    add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+    apt update
+    apt install fastfetch -y
 }
 
 
 
 #instalar oh my bash
 installOhMyBash(){
-    sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 }
 
 
@@ -99,35 +121,34 @@ setarJavaHome(){
 removerLixo(){
     sudo rm *.deb
     rm -rf intelliJ-install/
-    sudo apt clean
-    sudo apt autoremove -y
+    apt clean
+    apt autoremove -y
 }
 
 
 
+main(){
+    up
+    clear
+    install
+    clear
+    downloadDeb
+    installDebs
+    clear
+    installIntellij
+    clear
+    installfastfetch
+    clear
+    installMaven
+    clear
+    setarJavaHome
+    clear
+    removerLixo
+    clear
+    fastfetch
+}
 
 
-up
-clear
-install
-clear
-up
-downloadDeb
-installDebs
-clear
-up
-installIntellij
-clear
-installfastfetch
-clear
-up
-installMaven
-clear
-setarJavaHome
-clear
-removerLixo
-clear
-fastfetch
 
-
+main
 
