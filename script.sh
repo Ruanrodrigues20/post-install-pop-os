@@ -50,22 +50,37 @@ install(){
         else
             echo "Falha ao instalar $pacote." >&2
         fi
-    zqzqdone
+    done
 }
 
 
 
 
 installFlatpaks(){
+    # Lista de pacotes no formato "remoto pacote"
+    pacotesP=(
+        "flathub io.github.flattool.Warehouse"
+        "flathub me.iepure.devtoolbox"
+    )
 
-#Warehouse
-flatpak install flathub io.github.flattool.Warehouse
+    for pacote in "${pacotesP[@]}"; do
+        # Separar remoto e pacote
+        read -r remoto app_id <<< "$pacote"
+        echo "Instalando: $app_id do remoto $remoto..."
 
+        # Instalar o pacote no nível system ou user
+        flatpak install --assumeyes --system "$remoto" "$app_id" 2>/dev/null || \
+        flatpak install --assumeyes --user "$remoto" "$app_id"
 
-#Dev Toolbox
-flatpak install flathub me.iepure.devtoolbox
-
+        # Verificar se a instalação foi bem-sucedida
+        if [ $? -eq 0 ]; then
+            echo "Pacote $app_id instalado com sucesso!"
+        else
+            echo "Falha ao instalar $app_id do remoto $remoto." >&2
+        fi
+    done
 }
+
 
 
 
@@ -92,10 +107,7 @@ installDebs(){
 
 #Instalar intellij
 installIntellij(){
-    git clone https://github.com/Ruanrodrigues20/intelliJ-install.git
-    cd intelliJ-install/
-    chmod +x install.sh
-    ./install.sh
+    ./install-intellij.sh
 }
 
 
@@ -155,21 +167,15 @@ main(){
     addFlatpakRep   
     downloadDeb
     installDebs
-    clear
     installIntellij
-    clear
     installfastfetch
-    clear
     installMaven
-    clear
     setarJavaHome
-    clear
     removerLixo
-    clear
     fastfetch
 }
 
 
 
-main
+installFlatpaks
 
