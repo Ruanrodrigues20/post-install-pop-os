@@ -3,27 +3,22 @@
 animation(){
     local pid=$1
     local spinstr='|/-\\'
+    local i=0
     while [ -d /proc/$pid ]; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        spinstr=$temp${spinstr%"$temp"}
+        # Limpa a linha antes de imprimir o próximo símbolo
+        printf "\r[${spinstr:$i:1}] Building"  
         sleep 0.1
-        printf "\b\b\b\b\b\b"
+        ((i=(i+1)%4))  # Controla a rotação do símbolo
     done
+    echo ""
 }
 
 
 #Atulizar
 up(){
-    echo "1. Updating System"
+    echo "1. Updating System."
 
-    apt update >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    apt upgrade -y >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    dpkg --configure -a >/dev/null 2>&1 &
+    apt update  >/dev/null 2>&1 && apt upgrade -y >/dev/null 2>&1 &
     pid=$!
     animation $pid
 }
@@ -44,7 +39,7 @@ addFlatpakRep(){
 #instalar programas
 install(){
     echo ""
-    echo "2. Installation of programs"
+    echo "2. Installation of programs."
     echo ""
 
     # Lista de pacotes a serem instalados
@@ -82,7 +77,7 @@ install(){
 
 installFlatpaks(){
     echo ""
-    echo "3. Installing flatpak programs"
+    echo "3. Installing flatpak programs."
     echo ""
 
     # Lista de pacotes no formato "remoto pacote"
@@ -120,7 +115,7 @@ installFlatpaks(){
 #Baixar programas deb
 downloadDeb(){
     echo ""
-    echo "4. Download packgage debs"
+    echo "4. Download packgage debs."
     echo ""
 
     #Java 21
@@ -134,7 +129,7 @@ downloadDeb(){
 #instalar debs
 installDebs(){
     echo ""
-    echo "5. Installing deb programs"
+    echo "5. Installing deb programs."
     echo ""
 
     for pacote in *.deb; do
@@ -157,7 +152,7 @@ installDebs(){
 #Instalar intellij
 installIntellij(){
     echo ""
-    echo "6. Installing Intellij Ultimate"
+    echo "6. Installing Intellij Ultimate."
     echo ""
 
     cd intellij/
@@ -170,7 +165,7 @@ installIntellij(){
 #instalar fastfetch
 installfastfetch(){
     echo ""
-    echo "7. Instalando Fastfetch..."
+    echo "7. Instalando Fastfetch."
     add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1 &
     pid=$!
     animation $pid
@@ -196,7 +191,7 @@ installOhMyBash(){
 #instalar maven e adicionando ao PATH
 installMaven(){
     echo ""
-    echo "8. Installing Maven"
+    echo "8. Installing Maven."
     echo ""
 
     wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz &
@@ -225,7 +220,7 @@ setarJavaHome(){
 
 removerLixo(){
     echo ""
-    echo "9. Removing temporary files"
+    echo "9. Removing temporary files."
     echo ""
 
     rm *.deb
