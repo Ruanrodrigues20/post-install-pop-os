@@ -1,14 +1,33 @@
 #!/bin/bash 
 
+animation(){
+    local pid=$1
+    local spinstr='|/-\\'
+    while [ -d /proc/$pid ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        spinstr=$temp${spinstr%"$temp"}
+        sleep 0.1
+        printf "\b\b\b\b\b\b"
+    done
+}
+
 
 #Atulizar
 up(){
     echo "1. Updating System"
 
-    apt update >/dev/null 2>&1
-    apt upgrade -y >/dev/null 2>&1
-    dpkg --configure -a >/dev/null 2>&1
+    apt update >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
+    apt upgrade -y >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
+    dpkg --configure -a >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
 }
+
 
 
 
@@ -119,25 +138,18 @@ installDebs(){
     echo ""
 
     for pacote in *.deb; do
-        echo -ne "Instalando $pacote"
-        
-        # Animação simples
-        for i in {1..3}; do
-            echo -ne "."
-            sleep 0.3
-        done
-        
-        # Instala o pacote
-        sudo dpkg -i "$pacote" >/dev/null 2>&1
-        
-        # Verifica se a instalação foi bem-sucedida
+        echo -n "Instalando $pacote..."
+        sudo dpkg -i "$pacote" >/dev/null 2>&1 &
+        pid=$!
+        animation $pid
         if [ $? -eq 0 ]; then
-            echo -e "\nPacote $pacote instalado com sucesso!"
+            echo " - Instalado com sucesso!"
         else
-            echo -e "\nFalha ao instalar $pacote." >&2
+            echo " - Falha ao instalar."
         fi
     done
     rm *.deb
+    
 }
 
 
@@ -158,12 +170,16 @@ installIntellij(){
 #instalar fastfetch
 installfastfetch(){
     echo ""
-    echo "7. Installing Fastfetch"
-    echo ""
-
-    add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1
-    apt update >/dev/null 2>&1
-    apt install fastfetch -y >/dev/null 2>&1
+    echo "7. Instalando Fastfetch..."
+    add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
+    apt update >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
+    apt install fastfetch -y >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
 }
 
 
@@ -183,8 +199,12 @@ installMaven(){
     echo "8. Installing Maven"
     echo ""
 
-    wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
-    tar -xzvf apache-maven-3.9.9-bin.tar.gz >/dev/null 2>&1
+    wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz &
+    pid=$!
+    animation $pid
+    tar -xzvf apache-maven-3.9.9-bin.tar.gz >/dev/null 2>&1 &
+    pid=$!
+    animation $pid
     rm *.gz
     mv apache maven
     mkdir ~/.maven
