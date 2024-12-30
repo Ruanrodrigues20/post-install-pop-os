@@ -3,48 +3,50 @@
 
 #Atulizar
 up(){
-    apt update 
-    apt upgrade -y
-    dpkg --configure -a
+    echo "1. Updating System"
+
+    apt update >/dev/null 2>&1
+    apt upgrade -y >/dev/null 2>&1
+    dpkg --configure -a >/dev/null 2>&1
 }
 
 
 
 addRepositories(){
-    add-apt-repository ppa:flatpak/stable -y
-    apt update 
+    add-apt-repository ppa:flatpak/stable -y >/dev/null 2>&1
+    apt update >/dev/null 2>&1
 }
 
 addFlatpakRep(){
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y >/dev/null 2>&1
 }
 
 
 #instalar programas
 install(){
-
+    echo "2. Installation of programs"
     # Lista de pacotes a serem instalados
     pacotes=(
         curl
-        wget
-        dpkg
-        git
-        neofetch
-        discord
-        vlc
-        cpufetch
-        hollywood
-        vim
-        libreoffice
-        gimp
+        #wget
+        #dpkg
+        #git
+        #neofetch
+        #discord
+        #vlc
+        #cpufetch
+        #hollywood
+        #vim
+        #libreoffice
+        #gimp
         flatpak
-        gnome-software-plugin-flatpak
+        #gnome-software-plugin-flatpak
     )
 
     # Instalando cada pacote com um laço
     for pacote in "${pacotes[@]}"; do
         echo "Instalando: $pacote..."
-        apt install -y "$pacote"
+        apt install -y "$pacote" >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             echo "Pacote $pacote instalado com sucesso!"
         else
@@ -57,6 +59,8 @@ install(){
 
 
 installFlatpaks(){
+    echo "3. Installing flatpak programs"
+
     # Lista de pacotes no formato "remoto pacote"
     pacotesP=(
         "flathub io.github.flattool.Warehouse"
@@ -89,6 +93,7 @@ installFlatpaks(){
 
 #Baixar programas deb
 downloadDeb(){
+    echo "4. Download packgage debs"
     #Java 21
     wget -c https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
     
@@ -99,7 +104,28 @@ downloadDeb(){
     
 #instalar debs
 installDebs(){
-    dpkg -i *.deb
+    echo "5. Installing deb programs"
+    echo " "
+
+    for pacote in *.deb; do
+        echo -ne "Instalando $pacote"
+        
+        # Animação simples
+        for i in {1..3}; do
+            echo -ne "."
+            sleep 0.3
+        done
+        
+        # Instala o pacote
+        sudo dpkg -i "$pacote" >/dev/null 2>&1
+        
+        # Verifica se a instalação foi bem-sucedida
+        if [ $? -eq 0 ]; then
+            echo -e "\nPacote $pacote instalado com sucesso!"
+        else
+            echo -e "\nFalha ao instalar $pacote." >&2
+        fi
+    done
     rm *.deb
 }
 
@@ -107,15 +133,22 @@ installDebs(){
 
 #Instalar intellij
 installIntellij(){
-    ./install-intellij.sh
+    echo "6. Installing Intellij Ultimate"
+    echo " "
+    cd intellij/
+    chmod +x install.sh
+    ./install.sh
+    cd ..
 }
 
 
 #instalar fastfetch
 installfastfetch(){
-    add-apt-repository ppa:zhangsongcui3371/fastfetch -y
-    apt update
-    apt install fastfetch -y
+    echo "7. Installing Fastfetch"
+    echo " " 
+    add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1
+    apt update >/dev/null 2>&1
+    apt install fastfetch -y >/dev/null 2>&1
 }
 
 
@@ -131,6 +164,8 @@ installOhMyBash(){
 
 #instalar maven e adicionando ao PATH
 installMaven(){
+    echo "8. Installing Maven"
+
     wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
     tar -xzvf apache-maven-3.9.9-bin.tar.gz
     rm *.gz
@@ -152,10 +187,10 @@ setarJavaHome(){
 }
 
 removerLixo(){
+    echo "9. Removing temporary files"
     rm *.deb
     rm -rf intelliJ-install/
-    apt clean
-    apt autoremove -y
+    apt autoremove -y >/dev/null 2>&1
 }
 
 
@@ -165,6 +200,7 @@ main(){
     addRepositories
     install
     addFlatpakRep   
+    installFlatpaks
     downloadDeb
     installDebs
     installIntellij
@@ -175,7 +211,4 @@ main(){
     fastfetch
 }
 
-
-
-installFlatpaks
-
+main
