@@ -24,23 +24,26 @@ addFlatpakRep(){
 
 #instalar programas
 install(){
+    echo ""
     echo "2. Installation of programs"
+    echo ""
+
     # Lista de pacotes a serem instalados
     pacotes=(
         curl
-        #wget
-        #dpkg
-        #git
-        #neofetch
-        #discord
-        #vlc
-        #cpufetch
-        #hollywood
-        #vim
-        #libreoffice
-        #gimp
+        wget
+        dpkg
+        git
+        neofetch
+        discord
+        vlc
+        cpufetch
+        hollywood
+        vim
+        libreoffice
+        gimp
         flatpak
-        #gnome-software-plugin-flatpak
+        gnome-software-plugin-flatpak
     )
 
     # Instalando cada pacote com um laço
@@ -59,29 +62,31 @@ install(){
 
 
 installFlatpaks(){
+    echo ""
     echo "3. Installing flatpak programs"
+    echo ""
 
     # Lista de pacotes no formato "remoto pacote"
     pacotesP=(
-        "flathub io.github.flattool.Warehouse"
-        "flathub me.iepure.devtoolbox"
+        "io.github.flattool.Warehouse"
+        "me.iepure.devtoolbox"
     )
+
+    # Adicionar reposit�rios se necess�rio (exemplo para flathub)
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
     for pacote in "${pacotesP[@]}"; do
         # Separar remoto e pacote
         read -r remoto app_id <<< "$pacote"
         echo "Instalando: $app_id do remoto $remoto..."
 
-        # Instalar o pacote no nível system ou user
-        flatpak install --assumeyes --system "$remoto" "$app_id" 2>/dev/null || \
-        flatpak install --assumeyes --user "$remoto" "$app_id"
-
-        # Verificar se a instalação foi bem-sucedida
+        # Tente instalar o pacote no n�vel system
+        flatpak install $pacote -y
         if [ $? -eq 0 ]; then
-            echo "Pacote $app_id instalado com sucesso!"
-        else
-            echo "Falha ao instalar $app_id do remoto $remoto." >&2
+            echo "Pacote $app_id instalado com sucesso no sistema!"
+            continue
         fi
+
     done
 }
 
@@ -91,9 +96,14 @@ installFlatpaks(){
 
 
 
+
+
 #Baixar programas deb
 downloadDeb(){
+    echo ""
     echo "4. Download packgage debs"
+    echo ""
+
     #Java 21
     wget -c https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
     
@@ -104,8 +114,9 @@ downloadDeb(){
     
 #instalar debs
 installDebs(){
+    echo ""
     echo "5. Installing deb programs"
-    echo " "
+    echo ""
 
     for pacote in *.deb; do
         echo -ne "Instalando $pacote"
@@ -133,8 +144,10 @@ installDebs(){
 
 #Instalar intellij
 installIntellij(){
+    echo ""
     echo "6. Installing Intellij Ultimate"
-    echo " "
+    echo ""
+
     cd intellij/
     chmod +x install.sh
     ./install.sh
@@ -144,8 +157,10 @@ installIntellij(){
 
 #instalar fastfetch
 installfastfetch(){
+    echo ""
     echo "7. Installing Fastfetch"
-    echo " " 
+    echo ""
+
     add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1
     apt update >/dev/null 2>&1
     apt install fastfetch -y >/dev/null 2>&1
@@ -164,16 +179,18 @@ installOhMyBash(){
 
 #instalar maven e adicionando ao PATH
 installMaven(){
+    echo ""
     echo "8. Installing Maven"
+    echo ""
 
     wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
-    tar -xzvf apache-maven-3.9.9-bin.tar.gz
+    tar -xzvf apache-maven-3.9.9-bin.tar.gz >/dev/null 2>&1
     rm *.gz
-    mv apache* maven
-    mkdir .maven
-    mv maven .maven/
+    mv apache maven
+    mkdir ~/.maven
+    mv maven ~/.maven/
     echo -e "\nexport MAVEN_HOME=\$HOME/.maven/maven\nexport PATH=\$MAVEN_HOME/bin:\$PATH" >> ~/.bashrc
-    source .bashrc
+    source ~/.bashrc
     mvn -v
 }
 
@@ -187,7 +204,10 @@ setarJavaHome(){
 }
 
 removerLixo(){
+    echo ""
     echo "9. Removing temporary files"
+    echo ""
+
     rm *.deb
     rm -rf intelliJ-install/
     apt autoremove -y >/dev/null 2>&1
