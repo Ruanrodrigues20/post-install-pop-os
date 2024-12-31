@@ -121,6 +121,8 @@ downloadDeb(){
     #Java 21
     wget -c https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
     
+    #virtual box
+    wget -c https://download.virtualbox.org/virtualbox/7.1.4/virtualbox-7.1_7.1.4-165100~Ubuntu~noble_amd64.deb
     #Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
 }
