@@ -14,9 +14,11 @@ animation(){
 }
 
 
+
+
 #Atulizar
 up(){
-    echo "1. Updating System."
+    printBlue "1. Updating System."
 
     apt update  >/dev/null 2>&1 && apt upgrade -y >/dev/null 2>&1 &
     pid=$!
@@ -36,10 +38,11 @@ addFlatpakRep(){
 }
 
 
+
 #instalar programas
 install(){
     echo ""
-    echo "2. Installation of programs."
+    printBlue "2. Installation of programs."
     echo ""
 
     # Lista de pacotes a serem instalados
@@ -58,32 +61,57 @@ install(){
         gimp
         flatpak
         gnome-software-plugin-flatpak
+        lutris
+        steam
     )
 
-    # Instalando cada pacote com um laço
+    installPackages "${pacotes[@]}"
+}
+
+
+
+installPackages(){
+
+    local pacotes=("$@")
     for pacote in "${pacotes[@]}"; do
         echo "Instalando: $pacote..."
         apt install -y "$pacote" >/dev/null 2>&1
         if [ $? -eq 0 ]; then
-            echo "Pacote $pacote instalado com sucesso!"
+            printGreen "Pacote $pacote instalado com sucesso!"
         else
-            echo "Falha ao instalar $pacote." >&2
+            printRed "Falha ao instalar $pacote." >&2
         fi
     done
 }
 
+printRed(){
+    local texto="$1"
+    echo -e "\e[31m$texto\e[0m"
+}
+
+
+printGreen() {
+    local texto="$1"
+    echo -e "\e[32m$texto\e[0m"
+}
+
+printBlue(){
+    local texto="$1"
+    echo -e "\e[34m$texto\e[0m"
+}
 
 
 
 installFlatpaks(){
     echo ""
-    echo "3. Installing flatpak programs."
+    printBlue "3. Installing flatpak programs."
     echo ""
 
     # Lista de pacotes no formato "remoto pacote"
     pacotesP=(
         "io.github.flattool.Warehouse"
         "me.iepure.devtoolbox"
+        "flatpak install flathub io.mrarm.mcpelauncher"
     )
 
     # Adicionar reposit�rios se necess�rio (exemplo para flathub)
@@ -91,22 +119,19 @@ installFlatpaks(){
 
     for pacote in "${pacotesP[@]}"; do
         # Separar remoto e pacote
-        read -r remoto app_id <<< "$pacote"
         echo "Instalando: $app_id do remoto $remoto..."
 
         # Tente instalar o pacote no n�vel system
         flatpak install $pacote -y
         if [ $? -eq 0 ]; then
-            echo "Pacote $app_id instalado com sucesso no sistema!"
+            printGreen "Pacote $app_id instalado com sucesso no sistema!"
             continue
+        else
+            printRed "Erro ao instalar o pacote $app_id. Verifique os logs para mais detalhes." >&2
         fi
 
     done
 }
-
-
-
-
 
 
 
@@ -115,7 +140,7 @@ installFlatpaks(){
 #Baixar programas deb
 downloadDeb(){
     echo ""
-    echo "4. Download packgage debs."
+    printBlue "4. Download packgage debs."
     echo ""
 
     #Java 21
@@ -126,12 +151,14 @@ downloadDeb(){
     #Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
 }
-    
+
+
+
     
 #instalar debs
 installDebs(){
     echo ""
-    echo "5. Installing deb programs."
+    printBlue "5. Installing deb programs."
     echo ""
 
     for pacote in *.deb; do
@@ -151,10 +178,11 @@ installDebs(){
 
 
 
+
 #Instalar intellij
 installIntellij(){
     echo ""
-    echo "6. Installing Intellij Ultimate."
+    printBlue "6. Installing Intellij Ultimate."
     echo ""
 
     cd intellij/
@@ -164,10 +192,11 @@ installIntellij(){
 }
 
 
+
 #instalar fastfetch
 installfastfetch(){
     echo ""
-    echo "7. Instalando Fastfetch."
+    printBlue "7. Instalando Fastfetch."
     add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1 &
     pid=$!
     animation $pid
@@ -192,9 +221,6 @@ installOhMyBash(){
 
 #instalar maven e adicionando ao PATH
 installMaven(){
-    echo ""
-    echo "8. Installing Maven."
-    echo ""
 
     wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz &
     pid=$!
@@ -220,12 +246,43 @@ setarJavaHome(){
     $JAVA_HOME
 }
 
-removerLixo(){
+
+
+setupPythonEnv() {
     echo ""
-    echo "9. Removing temporary files."
+    printBlue "8. Installing setup Python Env."
     echo ""
 
-    rm *.deb
+
+    echo "Updating the system..."
+    up  >/dev/null 2>&1
+
+    echo "Installing python3-venv, python3-poetry e pipx..."
+    pacotes=(python3-venv python3-poetry pipx)
+    
+    installPackages "${pacotes[@]}"
+
+    echo "Ensuring pipx is in the PATH..."
+    pipx ensurepath
+    source ~/.bashrc || source ~/.zshrc
+
+    echo "Installing virtualenv using pipx..."
+    pipx install virtualenv
+
+    echo "Configuring Poetry to create virtual environments in the project directory..."
+    poetry config virtualenvs.in-project true
+
+    echo "Installation complete!"
+}
+
+
+
+removerLixo(){
+    echo ""
+    printBlue "9. Removing temporary files."
+    echo ""
+
+    rm pipx install virtualenv*.deb
     rm -rf intelliJ-install/
     apt autoremove -y >/dev/null 2>&1
 }
@@ -242,8 +299,8 @@ main(){
     installDebs
     installIntellij
     installfastfetch
-    installMaven
     setarJavaHome
+    setupPythonEnv
     removerLixo
     fastfetch
 }
