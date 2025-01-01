@@ -19,10 +19,12 @@ animation(){
 #Atulizar
 up(){
     printBlue "1. Updating System."
+    echo ""
 
     apt update  >/dev/null 2>&1 && apt upgrade -y >/dev/null 2>&1 &
     pid=$!
     animation $pid
+    rm /var/cache/apt/archives/lock >/dev/null 2>&1
 }
 
 
@@ -47,7 +49,7 @@ install(){
 
     # Lista de pacotes a serem instalados
     pacotes=(
-        curl
+        #curl
         wget
         dpkg
         git
@@ -282,8 +284,7 @@ removerLixo(){
     printBlue "9. Removing temporary files."
     echo ""
 
-    rm pipx install virtualenv*.deb
-    rm -rf intelliJ-install/
+    rm .deb
     apt autoremove -y >/dev/null 2>&1
 }
 
