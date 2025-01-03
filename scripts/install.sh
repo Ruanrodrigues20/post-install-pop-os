@@ -53,6 +53,7 @@ install(){
         wget
         dpkg
         git
+        tree
         neofetch
         discord
         vlc
