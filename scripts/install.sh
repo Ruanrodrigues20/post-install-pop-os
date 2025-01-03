@@ -280,7 +280,7 @@ setupPythonEnv() {
 
 configGit(){
     echo ""
-    printBlue "10. Config global git."
+    printBlue "9. Config global git."
     echo ""
   
     echo -n  "Enter your user.name: "
@@ -310,7 +310,7 @@ configGit(){
 
 removerLixo(){
     echo ""
-    printBlue "9. Removing temporary files."
+    printBlue "10. Removing temporary files."
     echo ""
 
     rm .deb
