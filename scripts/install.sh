@@ -278,6 +278,34 @@ setupPythonEnv() {
     echo "Installation complete!"
 }
 
+configGit(){
+    echo ""
+    printBlue "10. Config global git."
+    echo ""
+  
+    echo -n  "Enter your user.name: "
+    read user
+    echo "You typed your user.name: $user"
+    
+    echo ""
+
+    echo -n  "Enter your user.email: "
+    read email
+    echo "You typed your user.email: $email"
+
+    echo ""
+
+
+    if [[ -n "$user" && -n "$email" ]]; then
+        git config --global user.name "$user"
+        git config --global user.email "$email"
+        printGreen "Git global config updated successfully!"
+    else
+        printRed "Error: Both user.name and user.email must be provided."
+    fi
+
+}
+
 
 
 removerLixo(){
@@ -304,6 +332,7 @@ main(){
     installfastfetch
     setarJavaHome
     setupPythonEnv
+    configGit
     removerLixo
     fastfetch
 }
