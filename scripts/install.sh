@@ -286,6 +286,7 @@ removerLixo(){
 
     rm .deb
     apt autoremove -y >/dev/null 2>&1
+    apt clean
 }
 
 
