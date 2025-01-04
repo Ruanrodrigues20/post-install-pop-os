@@ -89,8 +89,9 @@ The script performs the following operations:
     ./script.sh
  
    
-   Wait for the script to complete. It will perform several installations and configurations on your system.
-   During execution, it will clean up temporary files and set environment variables.
+Wait for the script to complete. It will perform several installations and configurations on your system.
+During execution, it will clean up temporary files and set environment variables.
+
 
 4. **Restart the terminal or system**
    To ensure all environment variables are loaded correctly, restart the terminal or your system.
