@@ -39,7 +39,13 @@ The script performs the following operations:
 8. **Set JAVA_HOME:**
    - Defines the Java path (`JAVA_HOME`) in the `.bashrc` file to facilitate the use of Java in the terminal.
 
-9. **Clean up and Remove Temporary Files:**
+
+9. **Set config global Git:**
+   - Defines the your user.name and user.email for global git settings
+
+
+
+10. **Clean up and Remove Temporary Files:**
    - Removes downloaded `.deb` packages, cleans package cache, and removes unnecessary packages.
 
 ---
