@@ -48,6 +48,7 @@ The script performs the following operations:
 10. **Clean up and Remove Temporary Files:**
    - Removes downloaded `.deb` packages, cleans package cache, and removes unnecessary packages.
 
+
 ---
 
 ## Prerequisites
