@@ -87,7 +87,8 @@ The script performs the following operations:
     ```bash
     ./script.sh
  
-   Wait for the script to complete. It will perform several installations and configurations on your system.
+   
+Wait for the script to complete. It will perform several installations and configurations on your system.
    During execution, it will clean up temporary files and set environment variables.
 
 4. **Restart the terminal or system**
