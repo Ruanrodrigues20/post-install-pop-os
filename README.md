@@ -88,11 +88,11 @@ The script performs the following operations:
     ./script.sh
  
    
-Wait for the script to complete. It will perform several installations and configurations on your system.
+   Wait for the script to complete. It will perform several installations and configurations on your system.
    During execution, it will clean up temporary files and set environment variables.
 
 4. **Restart the terminal or system**
-    To ensure all environment variables are loaded correctly, restart the terminal or your system.
+   To ensure all environment variables are loaded correctly, restart the terminal or your system.
 
 ---
 
@@ -100,16 +100,16 @@ Wait for the script to complete. It will perform several installations and confi
 
 The script is divided into several functions that can be called separately if needed:
 
-- **Função `up`**: Updates the system and fixes broken packages.
-- **Função `install`**:Installs essential packages.
-- **Função `downloadDeb`**:  Downloads .deb packages (Java 21, VSCode and Virtual Box).
-- **Função `installDebs`**: Installs packages `.deb` and clean up the files.
-- **Função `installIntellij`**: Installs IntelliJ IDEA.
-- **Função `installfastfetch`**: Installs  Fastfetch.
-- **Função `installOhMyBash`**: Installs Oh My Bash.
-- **Função `installMaven`**:  Installs Maven and configures MAVEN_HOME and PATH.
-- **Função `setarJavaHome`**:  Sets the JAVA_HOME environment variable.
-- **Função `removerLixo`**: Cleans temporary files, packages, and unnecessary directories.
+- **Function `up`**: Updates the system and fixes broken packages.
+- **Function `install`**:Installs essential packages.
+- **Function `downloadDeb`**:  Downloads .deb packages (Java 21, VSCode and Virtual Box).
+- **Function `installDebs`**: Installs packages `.deb` and clean up the files.
+- **Function `installIntellij`**: Installs IntelliJ IDEA.
+- **Function `installfastfetch`**: Installs  Fastfetch.
+- **Function `installOhMyBash`**: Installs Oh My Bash.
+- **Function `installMaven`**:  Installs Maven and configures MAVEN_HOME and PATH.
+- **Function `setarJavaHome`**:  Sets the JAVA_HOME environment variable.
+- **Function `removerLixo`**: Cleans temporary files, packages, and unnecessary directories.
 
 ---
 
