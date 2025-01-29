@@ -49,7 +49,7 @@ install(){
 
     # Lista de pacotes a serem instalados
     pacotes=(
-        #curl
+        curl
         wget
         dpkg
         git
@@ -57,15 +57,17 @@ install(){
         neofetch
         discord
         vlc
-        cpufetch
-        hollywood
+        #cpufetch
+        #hollywood
         vim
         libreoffice
         gimp
         flatpak
         gnome-software-plugin-flatpak
-        lutris
-        steam
+        #lutris
+        #steam
+        folder-color 
+        gnome-sushi
     )
 
     installPackages "${pacotes[@]}"
@@ -112,9 +114,9 @@ installFlatpaks(){
 
     # Lista de pacotes no formato "remoto pacote"
     pacotesP=(
-        "io.github.flattool.Warehouse"
-        "me.iepure.devtoolbox"
-        "flatpak install flathub io.mrarm.mcpelauncher"
+        #"io.github.flattool.Warehouse"
+        #"me.iepure.devtoolbox"
+        #"flatpak install flathub io.mrarm.mcpelauncher"
     )
 
     # Adicionar reposit�rios se necess�rio (exemplo para flathub)
@@ -150,7 +152,7 @@ downloadDeb(){
     wget -c https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
     
     #virtual box
-    wget -c https://download.virtualbox.org/virtualbox/7.1.4/virtualbox-7.1_7.1.4-165100~Ubuntu~noble_amd64.deb
+    #wget -c https://download.virtualbox.org/virtualbox/7.1.4/virtualbox-7.1_7.1.4-165100~Ubuntu~noble_amd64.deb
     #Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
 }
@@ -244,7 +246,7 @@ installMaven(){
 
 #adicionando o JAVA_HOME ao PATH
 setarJavaHome(){
-    echo -e "\nJAVA_HOME=/usr/lib/jvm/jdk-21.0.5-oracle-x64/\nexport JAVA_HOME\nexport PATH=\$PATH:\$JAVA_HOME" >> ~/.bashrc
+    echo -e "\nJAVA_HOME=/usr/lib/jvm/jdk-21.0.6-oracle-x64/\nexport JAVA_HOME\nexport PATH=\$PATH:\$JAVA_HOME" >> ~/.bashrc
     source .bashrc
     $JAVA_HOME
 }
@@ -321,20 +323,20 @@ removerLixo(){
 
 
 main(){
-    up
-    addRepositories
-    install
-    addFlatpakRep   
-    installFlatpaks
-    downloadDeb
-    installDebs
-    installIntellij
-    installfastfetch
-    setarJavaHome
+    #up
+    #addRepositories
+    #install
+    #addFlatpakRep   
+    #installFlatpaks
+    #downloadDeb
+    #installDebs
+    #installIntellij
+    #installfastfetch
+    #setarJavaHome
     setupPythonEnv
-    configGit
-    removerLixo
-    fastfetch
+    #configGit
+    #removerLixo
+    #fastfetch
 }
 
 main
