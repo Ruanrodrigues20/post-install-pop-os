@@ -371,12 +371,12 @@ main(){
     installDebs
     installIntellij
     installfastfetch
-    setJavaHome
-    setupPythonEnv
-    configGit
+    #setJavaHome
+    #setupPythonEnv
+    #configGit
     theme
     removeTrash
-    installOhMyBash
+    #installOhMyBash
     reboot_system
     #fastfetch
 }
