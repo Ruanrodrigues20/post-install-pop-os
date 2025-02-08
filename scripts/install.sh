@@ -41,11 +41,18 @@ up(){
 
 
 remove_trava(){
-    sudo rm -rf /var/lib/dpkg/lock*
-    sudo rm -rf /var/lib/apt/lists/lock
-    sudo dpkg --configure -a
-    sudo apt autoclean -y
+    # Verifica se há processos apt ou dpkg em andamento
+    if pgrep -x "apt" >/dev/null || pgrep -x "dpkg" >/dev/null; then
+        exit 1
+    else
+        # Remover as travas do apt/dpkg
+        sudo rm -rf /var/lib/dpkg/lock* >/dev/null 2>&1
+        sudo rm -rf /var/lib/apt/lists/lock >/dev/null 2>&1
+        sudo dpkg --configure -a
+        sudo apt autoclean -y >/dev/null 2>&1
+    fi
 }
+
 
 addRepositories(){
     add-apt-repository ppa:flatpak/stable -y >/dev/null 2>&1
