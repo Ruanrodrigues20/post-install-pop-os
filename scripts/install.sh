@@ -226,6 +226,7 @@ installIntellij(){
 }
 
 theme(){
+   chmod +x install.sh
    sudo ./theme.sh
 }
 
