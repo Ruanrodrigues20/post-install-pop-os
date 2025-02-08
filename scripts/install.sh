@@ -346,6 +346,10 @@ removerLixo(){
     apt clean
 }
 
+theme(){
+   sudo ./theme.sh
+}
+
 
 
 main(){
@@ -360,11 +364,12 @@ main(){
     downloadDeb
     installDebs
     installIntellij
-    #installfastfetch
-    #setarJavaHome
+    installfastfetch
+    setarJavaHome
     setupPythonEnv
-    #configGit
-    #removerLixo
+    configGit
+    theme
+    removerLixo
     #fastfetch
 }
 
