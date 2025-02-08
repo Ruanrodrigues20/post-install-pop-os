@@ -39,15 +39,11 @@ The script performs the following operations:
 8. **Set JAVA_HOME:**
    - Defines the Java path (`JAVA_HOME`) in the `.bashrc` file to facilitate the use of Java in the terminal.
 
-
 9. **Set config global Git:**
-   - Defines the your user.name and user.email for global git settings
-
-
+   - Defines the your `user.name` and `user.email` for global git settings.
 
 10. **Clean up and Remove Temporary Files:**
    - Removes downloaded `.deb` packages, cleans package cache, and removes unnecessary packages.
-
 
 ---
 
@@ -63,8 +59,7 @@ The script performs the following operations:
 
 ### Steps:
 
-
-1. **Clone the repository or download the script:**
+1. **Clone the Repository or Download the Script:**
 
    If you don't have the script locally, run the following command to clone the repository:
 
@@ -72,61 +67,82 @@ The script performs the following operations:
    git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git
    cd post-install-pop-os
 
-   
+2. **Grant Execution Permissions to the Script:**
 
-2. **Grant execution permissions to the script:**
    If the file is not executable, use the following command to grant permissions:
 
+   ```bash
+   chmod +x script.sh
+
+---
+
+3. **Run the Script:**
+
+To execute the script, run the following command in the terminal:
+
+```bash
+./script.sh
+
+Wait for the script to complete. It will install and configure several programs and tools, as well as make system optimizations.
+
+4. Restart the Terminal or System:
 
 
-    ```bash
-    chmod +x script.sh
 
-3. **Run the script:**
-   To run the script, just execute the following command in the terminal:
-  
-    ```bash
-    ./script.sh
- 
-   
-Wait for the script to complete. It will perform several installations and configurations on your system.
-During execution, it will clean up temporary files and set environment variables.
+After the script completes, it's recommended to restart the terminal or your system to ensure that environment variables and configurations take effect.
 
 
-4. **Restart the terminal or system**
-   To ensure all environment variables are loaded correctly, restart the terminal or your system.
+---
 
 ---
 
 ## Script Structure
 
-The script is divided into several functions that can be called separately if needed:
+The script is divided into several functions, each responsible for a specific task. Here is a detailed breakdown:
 
-- **Function `up`**: Updates the system and fixes broken packages.
-- **Function `install`**:Installs essential packages.
-- **Function `downloadDeb`**:  Downloads .deb packages (Java 21, VSCode and Virtual Box).
-- **Function `installDebs`**: Installs packages `.deb` and clean up the files.
-- **Function `installIntellij`**: Installs IntelliJ IDEA.
-- **Function `installfastfetch`**: Installs  Fastfetch.
-- **Function `installOhMyBash`**: Installs Oh My Bash.
-- **Function `installMaven`**:  Installs Maven and configures MAVEN_HOME and PATH.
-- **Function `setarJavaHome`**:  Sets the JAVA_HOME environment variable.
-- **Function `removerLixo`**: Cleans temporary files, packages, and unnecessary directories.
+### Function Breakdown:
+
+- **up()**: Updates the system and fixes broken packages.
+- **install()**: Installs essential software packages.
+- **downloadDeb()**: Downloads .deb packages (Java 21, VSCode, and more).
+- **installDebs()**: Installs .deb packages and removes .deb files afterward.
+- **installIntellij()**: Installs IntelliJ IDEA Ultimate.
+- **installFastfetch()**: Installs Fastfetch.
+- **installOhMyBash()**: Installs Oh My Bash.
+- **installMaven()**: Installs Maven and configures environment variables for Maven.
+- **setJavaHome()**: Sets the JAVA_HOME environment variable in the terminal.
+- **removerLixo()**: Cleans temporary files, old packages, and unnecessary directories.
+- **theme()**: Installs the White Sur GTK Theme, White Sur Icons, and White Sur Wallpaper.
+
+---
+
+## Additional Features
+
+### White Sur GTK Theme:
+
+This script applies the White Sur macOS-like theme to your system:
+
+- **GTK Theme**: The script installs the White Sur GTK theme, transforming the look of your desktop environment to resemble macOS.
+- **Icons**: It also installs the White Sur icon pack for a cohesive aesthetic.
+- **Wallpaper**: Sets a White Sur wallpaper as the default background, completing the visual transformation.
 
 ---
 
 ## Notes
 
-- The script should run successfully on other Debian/Ubuntu-based distributions, but it has been primarily tested on **Pop!_OS**.
+The script should run successfully on other Debian/Ubuntu-based distributions, but it has been primarily tested on Pop!_OS.
+
+You may need to restart your terminal or system after running the script for all changes to take effect.
+
 
 ---
 
 ## Contribution
 
-Feel free to open issues or pull requests for improvements to the script.
+Feel free to open issues or pull requests if you have suggestions, improvements, or fixes for the script.
+
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the[LICENSE](LICENSE.txt) file for more details.
-
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for more details.
