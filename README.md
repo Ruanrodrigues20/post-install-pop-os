@@ -73,32 +73,6 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-inst
 
 ---
 
-### Steps:
-
-1. **Clone the Repository or Download the Script:**
-
-   If you do not have the script locally, run the following command to clone the repository:
-
-   ```bash
-   git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git
-   cd post-install-pop-os
-   ```
-
-2. **Grant Execution Permissions to the Script:**
-
-   If the file is not executable, use the following command to grant permissions:
-
-   ```bash
-   chmod +x main.sh
-   ```
-
-3. **Run the Script:**
-
-   To execute the script, run the following command in the terminal:
-
-   ```bash
-   ./main.sh
-   ```
 
    Wait for the script to complete. It will install and configure several programs and tools, as well as make system optimizations.
 
