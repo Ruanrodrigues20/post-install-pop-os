@@ -1,6 +1,4 @@
-Aqui está o conteúdo ajustado para uma melhor formatação em Markdown:
 
-```markdown
 # Post-Install Script for Pop!_OS or Debian and Derivatives
 
 This script automates the installation and configuration process of a series of useful programs and tools for Pop!_OS (or other distributions based on Ubuntu/Debian).
@@ -160,6 +158,3 @@ Feel free to open issues or pull requests if you have suggestions, improvements,
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for more details.
-```
-
-Fiz ajustes para corrigir a formatação de código e melhorar a estrutura das seções.
