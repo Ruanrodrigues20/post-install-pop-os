@@ -213,6 +213,9 @@ installPackages(){
             printRed "Falha ao instalar $pacote." >&2
         fi
     done
+
+
+    apt --fix-broken install -y
 }
 
 printRed(){
