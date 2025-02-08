@@ -1,4 +1,3 @@
-
 # Post-Install Script for Pop!_OS or Debian and Derivatives
 
 This script automates the installation and configuration process of a series of useful programs and tools for Pop!_OS (or other distributions based on Ubuntu/Debian).
@@ -63,13 +62,13 @@ To run the script, you can use one of the following commands, depending on wheth
 #### Using `curl`:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)"
 ```
 
 #### Using `wget`:
 
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
+bash -c "$(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)"
 ```
 
 ---
@@ -158,3 +157,5 @@ Feel free to open issues or pull requests if you have suggestions, improvements,
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for more details.
+
+---
