@@ -19,4 +19,26 @@ install_script() {
   sudo ./install.sh
 }
 
-install_script
+
+menu() {
+    # Display the ASCII art from logo.txt
+    cat logo.txt
+    echo ""
+
+    # Ask the user if they are ready
+    read -p "Are you ready? (y/n) " answer
+
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+        echo "Great! Let's get started..."
+        # Continue with the rest of your script here.
+    else
+        echo "Please come back when you're ready."
+        exit 1
+    fi
+}
+
+
+main(){
+    menu 
+    install_script
+}
