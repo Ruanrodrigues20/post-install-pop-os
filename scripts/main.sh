@@ -10,7 +10,7 @@ install_script() {
   git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git
   
   # Navega até o diretório do repositório
-  cd post-install-pop-os || exit
+  cd ./post-install-pop-os/scripts
   
   # Concede permissão de execução ao script
   chmod +x install.sh
