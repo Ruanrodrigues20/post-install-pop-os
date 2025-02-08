@@ -1,34 +1,25 @@
 #!/bin/bash 
 
-
-
 ------------------------------------------------------------------------------- #
-# -------------------------------TESTES E REQUISITOS----------------------------------------- #
+# -------------------------------TESTS AND REQUIREMENTS----------------------------------------- #
 
-# Internet conectando?
-testes_internet(){
+# Is internet connected?
+test_internet(){
 if ! ping -c 1 8.8.8.8 -q &> /dev/null; then
-   printRed "[ERROR] - Seu computador não tem conexão com a Internet. Verifique a rede."
+   printRed "[ERROR] - Your computer is not connected to the Internet. Please check your network."
   exit 1
 else
-  printGreen "[INFO] - Conexão com a Internet funcionano normalmente."
+  printGreen "[INFO] - Internet connection is working fine."
 fi
 }
 
 # ------------------------------------------------------------------------------ #
 
 
-
-
-
-
-
-
 ------------------------------------------------------------------------------- #
-# ------------------------------- UPDATES and ADD REPOSITORYS----------------------------------------- #
+# ------------------------------- UPDATES and ADD REPOSITORIES ----------------------------------------- #
 
-
-#Atulizar
+# Update
 up(){
     printBlue "1. Updating System."
     echo ""
@@ -40,12 +31,12 @@ up(){
 }
 
 
-remove_trava(){
-    # Verifica se há processos apt ou dpkg em andamento
+remove_lock(){
+    # Check if there are any apt or dpkg processes running
     if pgrep -x "apt" >/dev/null || pgrep -x "dpkg" >/dev/null; then
         exit 1
     else
-        # Remover as travas do apt/dpkg
+        # Remove the apt/dpkg locks
         sudo rm -rf /var/lib/dpkg/lock* >/dev/null 2>&1
         sudo rm -rf /var/lib/apt/lists/lock >/dev/null 2>&1
         sudo dpkg --configure -a
@@ -63,24 +54,17 @@ addRepositories(){
 # ------------------------------------------------------------------------------ #
 
 
-
-
-
-
-
-
 ------------------------------------------------------------------------------- #
 # ------------------------------- INSTALL PROGRAMS ----------------------------------------- #
 
-
-#instalar programas
+# Install programs
 install(){
     echo ""
-    printBlue "2. Installation of programs."
+    printBlue "2. Installing programs."
     echo ""
 
-    # Lista de pacotes a serem instalados
-    pacotes=(
+    # List of packages to be installed
+    packages=(
         curl
         wget
         dpkg
@@ -89,19 +73,14 @@ install(){
         neofetch
         discord
         vlc
-        #cpufetch
-        #hollywood
         vim
-        #gimp
         flatpak
         gnome-software-plugin-flatpak
-        #lutris
-        #steam
         folder-color 
         gnome-sushi
         maven 
     )
-    installPackages "${pacotes[@]}"
+    installPackages "${packages[@]}"
 }
 
 
@@ -110,27 +89,26 @@ installFlatpaks(){
     printBlue "3. Installing flatpak programs."
     echo ""
 
-    # Lista de pacotes no formato "remoto pacote"
-    pacotesP=(
+    # List of packages in the "remote package" format
+    flatpak_packages=(
         #"io.github.flattool.Warehouse"
         #"me.iepure.devtoolbox"
         #"flatpak install flathub io.mrarm.mcpelauncher"
     )
 
-    # Adicionar reposit�rios se necess�rio (exemplo para flathub)
+    # Add repositories if necessary (e.g., for flathub)
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-    for pacote in "${pacotesP[@]}"; do
-        # Separar remoto e pacote
-        echo "Instalando: $app_id do remoto $remoto..."
+    for package in "${flatpak_packages[@]}"; do
+        echo "Installing: $app_id from remote $remote..."
 
-        # Tente instalar o pacote no n�vel system
-        flatpak install $pacote -y
+        # Try to install the package at the system level
+        flatpak install $package -y
         if [ $? -eq 0 ]; then
-            printGreen "Pacote $app_id instalado com sucesso no sistema!"
+            printGreen "Package $app_id successfully installed!"
             continue
         else
-            printRed "Erro ao instalar o pacote $app_id. Verifique os logs para mais detalhes." >&2
+            printRed "Error installing package $app_id. Check the logs for more details." >&2
         fi
 
     done
@@ -138,51 +116,44 @@ installFlatpaks(){
 
 
 
-#Baixar programas deb
+# Download deb programs
 downloadDeb(){
     echo ""
-    printBlue "4. Download packgage debs."
+    printBlue "4. Downloading deb packages."
     echo ""
 
-    #Java 21
+    # Java 21
     wget -c https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
-    
-    #Vs code
+
+    # Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
 
-    #Chrome
-   wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    # Chrome
+    wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 }
 
 
-
-    
-#instalar debs
+# Install deb packages
 installDebs(){
     echo ""
     printBlue "5. Installing deb programs."
     echo ""
 
-    for pacote in *.deb; do
-        echo -n "Instalando $pacote..."
-        sudo dpkg -i "$pacote" >/dev/null 2>&1 &
+    for package in *.deb; do
+        echo -n "Installing $package..."
+        sudo dpkg -i "$package" >/dev/null 2>&1 &
         pid=$!
         animation $pid
         if [ $? -eq 0 ]; then
-            echo " - Instalado com sucesso!"
+            echo " - Installed successfully!"
         else
-            echo " - Falha ao instalar."
+            echo " - Failed to install."
         fi
     done
     rm *.deb
-    
 }
 
-
 # ------------------------------------------------------------------------------ #
-
-
-
 
 
 animation(){
@@ -190,34 +161,28 @@ animation(){
     local spinstr='|/-\\'
     local i=0
     while [ -d /proc/$pid ]; do
-        # Limpa a linha antes de imprimir o próximo símbolo
+        # Clear the line before printing the next symbol
         printf "\r[${spinstr:$i:1}] Building"  
         sleep 0.1
-        ((i=(i+1)%4))  # Controla a rotação do símbolo
+        ((i=(i+1)%4))  # Controls the rotation of the symbol
     done
     echo ""
 }
 
 
-
-
-
-
-
 ------------------------------------------------------------------------------- #
 # ------------------------------- UTILS ----------------------------------------- #
 
-
 installPackages(){
 
-    local pacotes=("$@")
-    for pacote in "${pacotes[@]}"; do
-        echo "Instalando: $pacote..."
-        apt install -y "$pacote" >/dev/null 2>&1
+    local packages=("$@")
+    for package in "${packages[@]}"; do
+        echo "Installing: $package..."
+        apt install -y "$package" >/dev/null 2>&1
         if [ $? -eq 0 ]; then
-            printGreen "Pacote $pacote instalado com sucesso!"
+            printGreen "Package $package installed successfully!"
         else
-            printRed "Falha ao instalar $pacote." >&2
+            printRed "Failed to install $package." >&2
         fi
     done
 
@@ -226,35 +191,29 @@ installPackages(){
 }
 
 printRed(){
-    local texto="$1"
-    echo -e "\e[31m$texto\e[0m"
+    local text="$1"
+    echo -e "\e[31m$text\e[0m"
 }
 
 
 printGreen() {
-    local texto="$1"
-    echo -e "\e[32m$texto\e[0m"
+    local text="$1"
+    echo -e "\e[32m$text\e[0m"
 }
 
 printBlue(){
-    local texto="$1"
-    echo -e "\e[34m$texto\e[0m"
+    local text="$1"
+    echo -e "\e[34m$text\e[0m"
 }
 
 
 # ------------------------------------------------------------------------------ #
 
 
-
-
-
-
-
 ------------------------------------------------------------------------------- #
 # ------------------------------- MORE SCRIPTS ----------------------------------------- #
 
-
-#Instalar intellij
+# Install Intellij
 installIntellij(){
     echo ""
     printBlue "6. Installing Intellij Ultimate."
@@ -290,11 +249,10 @@ installOhMyBash(){
 ------------------------------------------------------------------------------- #
 # ------------------------------- CONFIGS ----------------------------------------- #
 
-
-#instalar fastfetch
+# Install fastfetch
 installfastfetch(){
     echo ""
-    printBlue "7. Instalando Fastfetch."
+    printBlue "7. Installing Fastfetch."
     add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1 &
     pid=$!
     animation $pid
@@ -307,31 +265,27 @@ installfastfetch(){
 }
 
 
-
-
-
-#adicionando o JAVA_HOME ao PATH
-setarJavaHome(){
+# Set JAVA_HOME to PATH
+setJavaHome(){
     echo -e "\nJAVA_HOME=/usr/lib/jvm/jdk-21.0.6-oracle-x64/\nexport JAVA_HOME\nexport PATH=\$PATH:\$JAVA_HOME" >> ~/.bashrc
     source .bashrc
     $JAVA_HOME
 }
 
 
-
 setupPythonEnv() {
     echo ""
-    printBlue "8. Installing setup Python Env."
+    printBlue "8. Installing and setting up Python environment."
     echo ""
 
 
     echo "Updating the system..."
     up  >/dev/null 2>&1
 
-    echo "Installing python3-venv, python3-poetry e pipx..."
-    pacotes=(python3-venv python3-poetry pipx)
-    
-    installPackages "${pacotes[@]}"
+    echo "Installing python3-venv, python3-poetry, and pipx..."
+    packages=(python3-venv python3-poetry pipx)
+
+    installPackages "${packages[@]}"
 
     echo "Ensuring pipx is in the PATH..."
     pipx ensurepath
@@ -348,13 +302,13 @@ setupPythonEnv() {
 
 configGit(){
     echo ""
-    printBlue "9. Config global git."
+    printBlue "9. Configuring global git."
     echo ""
-  
+
     echo -n  "Enter your user.name: "
     read user
     echo "You typed your user.name: $user"
-    
+
     echo ""
 
     echo -n  "Enter your user.email: "
@@ -375,7 +329,7 @@ configGit(){
 }
 
 
-removerLixo(){
+removeTrash(){
     echo ""
     printBlue "10. Removing temporary files."
     echo ""
@@ -384,7 +338,6 @@ removerLixo(){
     apt autoremove -y >/dev/null 2>&1
     apt clean
 }
-
 
 
 reboot_system(){
@@ -404,18 +357,12 @@ reboot_system(){
 
 
 
-
-
-
-
-
-
 main(){
-    testes_internet
-    remove_trava
+    test_internet
+    remove_lock
     up
     addRepositories
-    remove_trava
+    remove_lock
     install
     addFlatpakRep   
     installFlatpaks
@@ -423,11 +370,11 @@ main(){
     installDebs
     installIntellij
     installfastfetch
-    setarJavaHome
+    setJavaHome
     setupPythonEnv
     configGit
     theme
-    removerLixo
+    removeTrash
     installOhMyBash
     reboot_system
     #fastfetch
