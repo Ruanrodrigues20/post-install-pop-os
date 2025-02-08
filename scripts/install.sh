@@ -18,20 +18,14 @@ fi
 # ------------------------------------------------------------------------------ #
 
 
-animation(){
-    local pid=$1
-    local spinstr='|/-\\'
-    local i=0
-    while [ -d /proc/$pid ]; do
-        # Limpa a linha antes de imprimir o próximo símbolo
-        printf "\r[${spinstr:$i:1}] Building"  
-        sleep 0.1
-        ((i=(i+1)%4))  # Controla a rotação do símbolo
-    done
-    echo ""
-}
 
 
+
+
+
+
+------------------------------------------------------------------------------- #
+# ------------------------------- UPDATES and ADD REPOSITORYS----------------------------------------- #
 
 
 #Atulizar
@@ -53,17 +47,23 @@ remove_trava(){
     sudo apt autoclean -y
 }
 
-
-
 addRepositories(){
     add-apt-repository ppa:flatpak/stable -y >/dev/null 2>&1
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y >/dev/null 2>&1
     apt update >/dev/null 2>&1
 }
 
-addFlatpakRep(){
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y >/dev/null 2>&1
-}
+# ------------------------------------------------------------------------------ #
 
+
+
+
+
+
+
+
+------------------------------------------------------------------------------- #
+# ------------------------------- INSTALL PROGRAMS ----------------------------------------- #
 
 
 #instalar programas
@@ -85,7 +85,6 @@ install(){
         #cpufetch
         #hollywood
         vim
-        libreoffice
         #gimp
         flatpak
         gnome-software-plugin-flatpak
@@ -93,43 +92,10 @@ install(){
         #steam
         folder-color 
         gnome-sushi
+        maven 
     )
-
     installPackages "${pacotes[@]}"
 }
-
-
-
-installPackages(){
-
-    local pacotes=("$@")
-    for pacote in "${pacotes[@]}"; do
-        echo "Instalando: $pacote..."
-        apt install -y "$pacote" >/dev/null 2>&1
-        if [ $? -eq 0 ]; then
-            printGreen "Pacote $pacote instalado com sucesso!"
-        else
-            printRed "Falha ao instalar $pacote." >&2
-        fi
-    done
-}
-
-printRed(){
-    local texto="$1"
-    echo -e "\e[31m$texto\e[0m"
-}
-
-
-printGreen() {
-    local texto="$1"
-    echo -e "\e[32m$texto\e[0m"
-}
-
-printBlue(){
-    local texto="$1"
-    echo -e "\e[34m$texto\e[0m"
-}
-
 
 
 installFlatpaks(){
@@ -162,8 +128,6 @@ installFlatpaks(){
 
     done
 }
-
-
 
 
 
@@ -208,6 +172,76 @@ installDebs(){
 }
 
 
+# ------------------------------------------------------------------------------ #
+
+
+
+
+
+animation(){
+    local pid=$1
+    local spinstr='|/-\\'
+    local i=0
+    while [ -d /proc/$pid ]; do
+        # Limpa a linha antes de imprimir o próximo símbolo
+        printf "\r[${spinstr:$i:1}] Building"  
+        sleep 0.1
+        ((i=(i+1)%4))  # Controla a rotação do símbolo
+    done
+    echo ""
+}
+
+
+
+
+
+
+
+------------------------------------------------------------------------------- #
+# ------------------------------- UTILS ----------------------------------------- #
+
+
+installPackages(){
+
+    local pacotes=("$@")
+    for pacote in "${pacotes[@]}"; do
+        echo "Instalando: $pacote..."
+        apt install -y "$pacote" >/dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            printGreen "Pacote $pacote instalado com sucesso!"
+        else
+            printRed "Falha ao instalar $pacote." >&2
+        fi
+    done
+}
+
+printRed(){
+    local texto="$1"
+    echo -e "\e[31m$texto\e[0m"
+}
+
+
+printGreen() {
+    local texto="$1"
+    echo -e "\e[32m$texto\e[0m"
+}
+
+printBlue(){
+    local texto="$1"
+    echo -e "\e[34m$texto\e[0m"
+}
+
+
+# ------------------------------------------------------------------------------ #
+
+
+
+
+
+
+
+------------------------------------------------------------------------------- #
+# ------------------------------- MORE SCRIPTS ----------------------------------------- #
 
 
 #Instalar intellij
@@ -222,6 +256,29 @@ installIntellij(){
     cd ..
 }
 
+theme(){
+   sudo ./theme.sh
+}
+
+installOhMyBash(){
+    printBlue "Installing Oh My Bash..."
+
+    # Run the installation in the background so it doesn't block the script
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" &
+
+    printGreen "Oh My Bash has been installed. Changes will take effect in the next terminal session."
+
+}
+
+
+
+# ------------------------------------------------------------------------------ #
+
+
+
+
+------------------------------------------------------------------------------- #
+# ------------------------------- CONFIGS ----------------------------------------- #
 
 
 #instalar fastfetch
@@ -240,33 +297,6 @@ installfastfetch(){
 }
 
 
-
-#instalar oh my bash
-installOhMyBash(){
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-}
-
-
-
-
-
-#instalar maven e adicionando ao PATH
-installMaven(){
-
-    wget -c https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz &
-    pid=$!
-    animation $pid
-    tar -xzvf apache-maven-3.9.9-bin.tar.gz >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    rm *.gz
-    mv apache maven
-    mkdir ~/.maven
-    mv maven ~/.maven/
-    echo -e "\nexport MAVEN_HOME=\$HOME/.maven/maven\nexport PATH=\$MAVEN_HOME/bin:\$PATH" >> ~/.bashrc
-    source ~/.bashrc
-    mvn -v
-}
 
 
 
@@ -335,7 +365,6 @@ configGit(){
 }
 
 
-
 removerLixo(){
     echo ""
     printBlue "10. Removing temporary files."
@@ -346,9 +375,28 @@ removerLixo(){
     apt clean
 }
 
-theme(){
-   sudo ./theme.sh
+
+
+reboot_system(){
+    # Ask if the user wants to reboot
+    read -p "Do you want to reboot the system now? (y/n): " response
+
+    # Check the response
+    if [[ "$response" == "y" || "$response" == "Y" ]]; then
+        echo "Rebooting the system..."
+        sudo reboot
+    else
+        echo "System will not be rebooted. You can reboot manually later."
+    fi
 }
+
+# ------------------------------------------------------------------------------ #
+
+
+
+
+
+
 
 
 
@@ -370,6 +418,8 @@ main(){
     configGit
     theme
     removerLixo
+    installOhMyBash
+    reboot_system
     #fastfetch
 }
 
