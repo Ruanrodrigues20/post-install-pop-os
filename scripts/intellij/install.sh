@@ -3,7 +3,7 @@
 
 if [ -z "$1" ]; then
     echo "Nenhuma versão fornecida. Usando a versão padrão."
-    LATEST_VERSION="2024.3.1.1"  # Versão padrão
+    LATEST_VERSION="2024.3.2.2"  # Versão padrão
 else
     LATEST_VERSION="$1" 
 fi
