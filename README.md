@@ -59,11 +59,15 @@ The script performs the following operations:
 
 To run the script, you can use one of the following commands, depending on whether you prefer `curl` or `wget`:
 
-#### Using `curl`:
+### Using `curl`:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 
+
+### Using Wget:
+
+```bash bash<(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 
 ---
 
@@ -74,7 +78,7 @@ bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-po
    If you do not have the script locally, run the following command to clone the repository:
 
    ```bash
-   git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git cd post-install-pop-os
+git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git cd post-install-pop-os
 
 2. **Grant Execution Permissions to the Script:**
 
