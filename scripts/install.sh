@@ -1,5 +1,23 @@
 #!/bin/bash 
 
+
+
+------------------------------------------------------------------------------- #
+# -------------------------------TESTES E REQUISITOS----------------------------------------- #
+
+# Internet conectando?
+testes_internet(){
+if ! ping -c 1 8.8.8.8 -q &> /dev/null; then
+   printRed "[ERROR] - Seu computador não tem conexão com a Internet. Verifique a rede."
+  exit 1
+else
+  printGreen "[INFO] - Conexão com a Internet funcionano normalmente."
+fi
+}
+
+# ------------------------------------------------------------------------------ #
+
+
 animation(){
     local pid=$1
     local spinstr='|/-\\'
@@ -27,6 +45,13 @@ up(){
     rm /var/cache/apt/archives/lock >/dev/null 2>&1
 }
 
+
+remove_trava(){
+    sudo rm -rf /var/lib/dpkg/lock*
+    sudo rm -rf /var/lib/apt/lists/lock
+    sudo dpkg --configure -a
+    sudo apt autoclean -y
+}
 
 
 
@@ -153,6 +178,9 @@ downloadDeb(){
     
     #Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
+
+    #Chrome
+   wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 }
 
 
@@ -321,8 +349,11 @@ removerLixo(){
 
 
 main(){
+    testes_internet
+    remove_trava
     up
     addRepositories
+    remove_trava
     install
     addFlatpakRep   
     installFlatpaks
