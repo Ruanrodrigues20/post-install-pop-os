@@ -64,11 +64,9 @@ To run the script, you can use one of the following commands, depending on wheth
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 
-#### Using `wget`:
 
-```bash 
-bash<(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 ---
+
 ### Steps:
 
 1. **Clone the Repository or Download the Script:**
