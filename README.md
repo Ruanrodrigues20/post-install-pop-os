@@ -89,7 +89,7 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-inst
    If the file is not executable, use the following command to grant permissions:
 
    ```bash
-   chmod +x script.sh
+   chmod +x main.sh
    ```
 
 3. **Run the Script:**
@@ -97,7 +97,7 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-inst
    To execute the script, run the following command in the terminal:
 
    ```bash
-   ./script.sh
+   ./main.sh
    ```
 
    Wait for the script to complete. It will install and configure several programs and tools, as well as make system optimizations.
