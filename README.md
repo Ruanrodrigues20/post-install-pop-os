@@ -70,7 +70,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-
 
 1. **Clone the Repository or Download the Script:**
 
-   If you don't have the script locally, run the following command to clone the repository:
+   If you do not have the script locally, run the following command to clone the repository:
 
    ```bash
    git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git cd post-install-pop-os
