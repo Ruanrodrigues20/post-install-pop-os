@@ -57,17 +57,6 @@ The script performs the following operations:
 
 ## How to Use
 
-To run the script, you can use one of the following commands, depending on whether you prefer `curl` or `wget`:
-
-### Using `curl`:
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
-
-
-### Using Wget:
-
-```bash bash<(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 
 ---
 
