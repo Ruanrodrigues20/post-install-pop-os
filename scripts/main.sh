@@ -35,7 +35,6 @@ menu() {
 }
 
 main() {
-    menu
     install_script
 }
 
