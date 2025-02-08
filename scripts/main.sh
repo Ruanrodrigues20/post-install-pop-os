@@ -21,7 +21,6 @@ install_script() {
 
 menu() {
     # Exibe a arte ASCII do arquivo logo.txt
-    cat ./logo.txt
     echo ""
 
     # Pergunta se o usuário está pronto
