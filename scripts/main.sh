@@ -3,8 +3,7 @@ set -e  # Para o script em caso de erro
 
 install_script() {
   # Clona o repositório e instala dependências básicas
-  sudo apt update
-  sudo apt install -y git wget curl
+  sudo apt install -y git
   
   # Clona o repositório
   git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git
