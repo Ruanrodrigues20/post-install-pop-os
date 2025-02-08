@@ -66,7 +66,8 @@ bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/post-install-po
 
 #### Using `wget`:
 
-```bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
+```bash 
+bash<(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/post-install-pop-os/main/scripts/main.sh)
 ---
 ### Steps:
 
