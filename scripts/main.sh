@@ -1,16 +1,16 @@
 #!/bin/bash
-
+set -e  # Para o script em caso de erro
 
 install_script() {
+  # Clona o repositório e instala dependências básicas
+  sudo apt update
+  sudo apt install -y git wget curl
+  
   # Clona o repositório
-
-  sudo apt install git -y
-  sudo apt install wget -y
-  sudo apt install curl -y
   git clone https://github.com/Ruanrodrigues20/post-install-pop-os.git
   
   # Navega até o diretório do repositório
-  cd post-install-pop-os
+  cd post-install-pop-os || exit
   
   # Concede permissão de execução ao script
   chmod +x install.sh
@@ -19,26 +19,25 @@ install_script() {
   sudo ./install.sh
 }
 
-
 menu() {
-    # Display the ASCII art from logo.txt
+    # Exibe a arte ASCII do arquivo logo.txt
     cat logo.txt
     echo ""
 
-    # Ask the user if they are ready
+    # Pergunta se o usuário está pronto
     read -p "Are you ready? (y/n) " answer
 
     if [[ "$answer" =~ ^[Yy]$ ]]; then
         echo "Great! Let's get started..."
-        # Continue with the rest of your script here.
     else
         echo "Please come back when you're ready."
         exit 1
     fi
 }
 
-
-main(){
-    menu 
+main() {
+    menu
     install_script
 }
+
+main
