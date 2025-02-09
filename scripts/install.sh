@@ -24,10 +24,7 @@ up(){
     printBlue "1. Updating System."
     echo ""
 
-    apt update  >/dev/null 2>&1 && apt upgrade -y >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    rm /var/cache/apt/archives/lock >/dev/null 2>&1
+    apt update && apt upgrade -y
 }
 
 
@@ -37,18 +34,18 @@ remove_lock(){
         exit 1
     else
         # Remove the apt/dpkg locks
-        sudo rm -rf /var/lib/dpkg/lock* >/dev/null 2>&1
-        sudo rm -rf /var/lib/apt/lists/lock >/dev/null 2>&1
+        sudo rm -rf /var/lib/dpkg/lock*
+        sudo rm -rf /var/lib/apt/lists/lock
         sudo dpkg --configure -a
-        sudo apt autoclean -y >/dev/null 2>&1
+        sudo apt autoclean -y
     fi
 }
 
 
 addRepositories(){
-    add-apt-repository ppa:flatpak/stable -y >/dev/null 2>&1
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y >/dev/null 2>&1
-    apt update >/dev/null 2>&1
+    add-apt-repository ppa:flatpak/stable -y 
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo -y
+    apt update
 }
 
 # ------------------------------------------------------------------------------ #
@@ -78,6 +75,8 @@ install(){
         gnome-software-plugin-flatpak
         folder-color 
         gnome-sushi
+	gnome-tweaks
+	gnome-shell-extension-manager
         maven 
     )
     installPackages "${packages[@]}"
@@ -141,9 +140,7 @@ installDebs(){
 
     for package in *.deb; do
         echo -n "Installing $package..."
-        sudo dpkg -i "$package" >/dev/null 2>&1 &
-        pid=$!
-        animation $pid
+        sudo dpkg -i "$package"
         if [ $? -eq 0 ]; then
             echo " - Installed successfully!"
         else
@@ -254,15 +251,9 @@ installOhMyBash(){
 installfastfetch(){
     echo ""
     printBlue "7. Installing Fastfetch."
-    add-apt-repository ppa:zhangsongcui3371/fastfetch -y >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    apt update >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
-    apt install fastfetch -y >/dev/null 2>&1 &
-    pid=$!
-    animation $pid
+    add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+    apt update
+    apt install fastfetch -y
 }
 
 
@@ -281,7 +272,7 @@ setupPythonEnv() {
 
 
     echo "Updating the system..."
-    up  >/dev/null 2>&1
+    up 
 
     echo "Installing python3-venv, python3-poetry, and pipx..."
     packages=(python3-venv python3-poetry pipx)
@@ -336,7 +327,7 @@ removeTrash(){
     echo ""
 
     rm .deb
-    apt autoremove -y >/dev/null 2>&1
+    apt autoremove -y
     apt clean
 }
 
