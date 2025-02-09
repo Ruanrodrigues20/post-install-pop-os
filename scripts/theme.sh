@@ -34,8 +34,8 @@ apply_themes(){
     gnome-extensions install user-theme@gnome-shell-extensions.gcampax.github.com
 
     echo "Aplicando temas automaticamente..."
-    gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-dark"
-    gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
+    gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-Dark"
+    gsettings set org.gnome.desktop.interface icon-theme "WhiteSur-dark"
 
     echo "Instalação concluída! Agora aplique o wallpaper manualmente nas configurações."
 }
