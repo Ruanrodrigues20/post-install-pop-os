@@ -9,17 +9,23 @@ clone_repositories(){
 
 install_gtk_theme(){
     echo "Instalando tema GTK..."
-    cd WhiteSur-gtk-theme && ./install.sh && cd ..
+    cd WhiteSur-gtk-theme 
+    ./install.sh
+    cd ..
 }
 
 install_icon_theme(){
     echo "Instalando tema de ícones..."
-    cd WhiteSur-icon-theme && ./install.sh && cd ..
+    cd WhiteSur-icon-theme
+    ./install.sh 
+    cd ..
 }
 
 install_wallpaper(){
     echo "Instalando wallpapers..."
-    cd WhiteSur-wallpapers && ./install.sh && cd ..
+    cd WhiteSur-wallpapers 
+    ./install-wallpapers.sh 
+    cd ..
 }
 
 apply_themes(){
