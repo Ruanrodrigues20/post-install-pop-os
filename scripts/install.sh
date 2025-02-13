@@ -127,8 +127,7 @@ downloadDeb(){
     # Vs code
     wget -c https://vscode.download.prss.microsoft.com/dbazure/download/stable/fabdb6a30b49f79a7aba0f2ad9df9b399473380f/code_1.96.2-1734607745_amd64.deb
 
-    # Chrome
-    wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   
 }
 
 
@@ -361,11 +360,11 @@ main(){
     downloadDeb
     installDebs
     installIntellij
-    installfastfetch
+    #installfastfetch
     #setJavaHome
     #setupPythonEnv
     #configGit
-    theme
+    #theme
     removeTrash
     #installOhMyBash
     reboot_system
